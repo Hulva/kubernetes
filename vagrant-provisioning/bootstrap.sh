@@ -11,11 +11,9 @@ EOF
 # Install docker from Docker-ce repository
 echo "[TASK 2] Install docker container engine"
 yum install -y -q yum-utils device-mapper-persistent-data lvm2 wget > /dev/null 2>&1
-
-wget -O /etc/yum.repos.d/docker-ce.repo https://download.docker.com/linux/centos/docker-ce.repo
-sed -i 's+download.docker.com+mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo
-
 # yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo > /dev/null 2>&1
+yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum makecache fast
 yum install -y -q docker-ce >/dev/null 2>&1
 
 # Enable docker service
@@ -71,7 +69,7 @@ EOF
 
 # Install Kubernetes
 echo "[TASK 9] Install Kubernetes (kubeadm, kubelet and kubectl)"
-yum install -y -q kubeadm kubelet kubectl >/dev/null 2>&1
+yum install -y -q --nogpgcheck kubeadm kubelet kubectl >/dev/null 2>&1
 
 # Start and Enable kubelet service
 echo "[TASK 10] Enable and start kubelet service"
